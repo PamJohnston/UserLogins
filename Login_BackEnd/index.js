@@ -21,7 +21,7 @@ import mongoose from 'mongoose';
 await mongoose.connect('mongodb://127.0.0.1/my_database');
 
 
-import userRoutes from './user.routes'
+import userRoutes from './user.routes.js'
 app.use('/', userRoutes)
 
 // 404 page
