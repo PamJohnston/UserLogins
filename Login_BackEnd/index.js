@@ -1,15 +1,17 @@
-var path = require('path');
-var express = require('express');
+import path from 'path';
+import express from 'express';
 
 var app = express();
-const PORT = 8000;
+
+import config from './config.js';
+const PORT = config.port;
+const MONGOURI = config.mongoUri;
 
 
 // database stuff
 // Connection URL - you should set this with a configuration 
 //   file that doesn't go in GitHub, though
-const MONGOURI = "mongodb://127.0.0.1:27017";
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 mongoose.Promise = global.Promise
 mongoose.connect(MONGOURI, { dbName: "users" })
 mongoose.connection.on('error', err => {
