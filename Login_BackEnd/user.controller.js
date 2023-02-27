@@ -20,6 +20,7 @@ const create = async (req, res) => {
   const list = async (req, res) => {
     try {
       let users = await User.find().select('name email updated created')
+      console.log("Got users" + users)
       res.json(users)
     } catch (err) {
       return res.status(400).json({
@@ -31,6 +32,7 @@ const create = async (req, res) => {
 
   const userByID = async (req, res, next, id) => {
     try {
+      console.log("Getting user: "+id)
       let user = await User.findById(id)
       if (!user)
         return res.status('400').json({
@@ -39,8 +41,26 @@ const create = async (req, res) => {
       req.profile = user
       next()
     } catch (err) {
-      return res.status('400').json({
+      return res.status(400).json({
         error: "Could not retrieve user"
+      })
+    }
+  }
+
+  const userByName = async (req, res, next, id) => {
+    try {
+      //let user = await User.findById(id)
+      console.log("Finding user by name "+id)
+      let user = await User.findOne({name: id});
+      if (!user)
+        return res.status(400).json({
+          error: "User not found"
+        })
+      req.profile = user
+      next()
+    } catch (err) {
+      return res.status(400).json({
+        error: "Could not retrieve user by name: "+err
       })
     }
   }
@@ -87,6 +107,7 @@ const create = async (req, res) => {
 export default {
   create,
   userByID,
+  userByName,
   read,
   list,
   remove,
