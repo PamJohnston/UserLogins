@@ -1,5 +1,9 @@
 import path from 'path';
 import express from 'express';
+import userRoutes from './user.routes.js'
+
+
+import bodyParser from 'body-parser'
 
 var app = express();
 
@@ -17,11 +21,13 @@ import mongoose from 'mongoose';
 //mongoose.connection.on('error', err => {
 //  throw new Error(`unable to connect to database: ${MONGOURI}`)
 //})
-
 await mongoose.connect('mongodb://127.0.0.1/my_database');
 
 
-import userRoutes from './user.routes.js'
+// parse body params and attache them to req.body
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use('/', userRoutes)
 
 // 404 page
