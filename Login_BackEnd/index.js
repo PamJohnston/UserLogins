@@ -12,11 +12,13 @@ const MONGOURI = config.mongoUri;
 // Connection URL - you should set this with a configuration 
 //   file that doesn't go in GitHub, though
 import mongoose from 'mongoose';
-mongoose.Promise = global.Promise
-mongoose.connect(MONGOURI, { dbName: "users" })
-mongoose.connection.on('error', err => {
-  throw new Error(`unable to connect to database: ${MONGOURI}`)
-})
+//mongoose.Promise = global.Promise
+//mongoose.connect(MONGOURI, { dbName: "users" })
+//mongoose.connection.on('error', err => {
+//  throw new Error(`unable to connect to database: ${MONGOURI}`)
+//})
+
+await mongoose.connect('mongodb://127.0.0.1/my_database');
 
 
 
